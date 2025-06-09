@@ -40,6 +40,7 @@ use('biblioteca');
 db.libros.find({});
 
 // Realiza un lookup para obtener los datos de los autores y la editorial
+use('biblioteca');
 db.libros.aggregate([
     {
         $match: { id: 1 }
