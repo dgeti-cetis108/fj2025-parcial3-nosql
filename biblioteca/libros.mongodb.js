@@ -60,5 +60,24 @@ db.libros.aggregate([
             foreignField: "id",
             as: "editorial_info"
         }
+    },
+    {
+        $project: {
+            _id: 0,
+            id: 1,
+            titulo: 1,
+            edicion: 1,
+            genero_literario: 1,
+            numero_de_paginas: 1,
+            idioma: 1,
+            autores: {
+                $map: {
+                    input: "$autores_info",
+                    as: "autor",
+                    in: { $concat: ["$$autor.nombre", " ", "$$autor.apellidos"] }
+                }
+            },
+            editorial: { $arrayElemAt: ["$editorial_info.nombre", 0] }
+        }
     }
 ]).toArray();
